@@ -1,55 +1,69 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../../App.css";
 import { SignupScreen } from './SignupScreen';
+import "./loginscreen.css";
 
 export const LoginScreen = () => {
   const [signIn, setSignIn] = useState(false);
 
+  const handleSignInToggle = () => {
+    setSignIn(!signIn);
+  };
+
+  const handleGetStarted = (e) => {
+    e.preventDefault();
+    setSignIn(true);
+  };
+
   return (
     <div className="loginscreen">
-      <div>
+      <header className="loginscreen-header">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
-          alt=""
-          className="fixed left-0 w-32 object-contain pl-5 pt-5"
+          alt="Netflix Logo"
+          className="loginscreen-logo"
         />
-
-        <div className="fixed right-5 top-5">
-          <button
-            className="cursor-pointer px-5 py-2 text-sm text-white bg-[#e50914]"
-            onClick={() => setSignIn(true)}
-          >
-            Sign In
-          </button>
-        </div>
-        <div className="loginscreen_Gradient" />
-      </div>
-      <div className="loginScreen_Body">
+        <button
+          className="loginscreen-signin-button"
+          onClick={handleSignInToggle}
+          aria-label="Toggle Sign In"
+        >
+          {signIn ? "Back to Home" : "Sign In"}
+        </button>
+      </header>
+      <div className="loginscreen-gradient" />
+      <main className="loginscreen-body">
         {signIn ? (
           <SignupScreen />
         ) : (
-          <>
-            <h1>Unlimited films, TV programmes and more.</h1>
-            <h2>Watch anywhere. Cancel at any time.</h2>
-            <h3>
-              Ready to watch? Enter your email to create or restart your
-              membership.
-            </h3>
-
-            <div className="loginScreen_input ">
-              <form className="loginScreen_content">
-                <input type="email" placeholder="Email Address" />
-                <button
-                  className="loginScreen_getStarted"
-                  onClick={() => setSignIn(true)}
-                >
-                  GET STARTED
-                </button>
-              </form>
-            </div>
-          </>
+          <section className="loginscreen-welcome">
+            <h1 className="loginscreen-title">Unlimited movies, TV shows, and more.</h1>
+            <h2 className="loginscreen-subtitle">Watch anywhere. Cancel at any time.</h2>
+            <p className="loginscreen-description">
+              Ready to watch? Enter your email to create or restart your membership.
+            </p>
+            <form className="loginscreen-form" onSubmit={handleGetStarted}>
+              <input
+                type="email"
+                placeholder="Email Address"
+                required
+                aria-label="Email Address"
+              />
+              <button
+                type="submit"
+                className="loginscreen-getstarted-button"
+                aria-label="Get Started"
+              >
+                GET STARTED
+              </button>
+            </form>
+          </section>
         )}
-      </div>
+      </main>
+      <footer className="loginscreen-footer">
+        <p>&copy; 2025 Netflix, Inc.</p>
+      </footer>
     </div>
   );
 };
